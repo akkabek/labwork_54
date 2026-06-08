@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product, Category
 
 def products_view(request):
-    products = Product.objects.all()
+    products = Product.objects.all().filter(remainder__gte=1).order_by('category').order_by('name')
     return render(request, 'products_view.html', {'products': products})
 
 def product_view(request, id):
