@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-3">{{ category.name }}</h2>
+
+<div class="row">
+    {% include 'partial/products_list.html' %}
+</div>
+{% endblock %}

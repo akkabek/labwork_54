@@ -6,13 +6,14 @@ from products.forms import SearchForm, ProductForm
 
 def products_view(request):
     products = Product.objects.all().filter(remainder__gte=1).order_by('category', 'name')
+    categories = Category.objects.all()
     search_form = SearchForm(data=request.GET)
     if search_form.is_valid():
         query = search_form.cleaned_data.get('query')
         if query:
             products = products.filter(name__icontains=query)
 
-    context = {'products': products, 'search_form': search_form}
+    context = {'products': products, 'search_form': search_form, 'categories': categories}
 
     return render(request, 'products_view.html', context)
 
@@ -98,3 +99,20 @@ def category_delete_view(request, id):
     if request.method == 'POST':
         category.delete()
     return redirect('categories_view')
+
+def category_products_view(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category=category, remainder__gte=1).order_by('name')
+
+    search_form = SearchForm(data=request.GET)
+    if search_form.is_valid():
+        query = search_form.cleaned_data.get('query')
+        if query:
+            products = products.filter(name__icontains=query)
+
+    context = {
+        'products': products,
+        'search_form': search_form,
+        'category': category,
+    }
+    return render(request, 'category_products_view.html', context)
