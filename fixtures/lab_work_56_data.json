@@ -4,7 +4,8 @@
   "pk": 1,
   "fields": {
     "name": "Electronics",
-    "description": "electronic devices"
+    "description": "electronic devices",
+    "slug": "electronics"
   }
 },
 {
@@ -12,7 +13,8 @@
   "pk": 6,
   "fields": {
     "name": "Beverages",
-    "description": "non-alcoholic beverages"
+    "description": "non-alcoholic beverages",
+    "slug": "beverages"
   }
 },
 {
@@ -38,7 +40,7 @@
     "created_at": "2026-06-04T06:52:52.542Z",
     "price": "200.00",
     "image": "https://i0.wp.com/cannichstores.co.uk/wp-content/uploads/2020/05/Coca-Cola-Original-Taste-330ml.png?fit=1000%2C1000&ssl=1",
-    "remainder": 5
+    "remainder": 0
   }
 },
 {
