@@ -68,6 +68,8 @@ def product_edit_view(request, id):
 
 def product_delete_view(request, id):
     product = get_object_or_404(Product, id=id)
+    if request.method == 'GET':
+        return render(request, 'product_delete_view.html', {'product': product})
     if request.method == 'POST':
         product.delete()
         return redirect('products')
