@@ -5,7 +5,7 @@ from products.forms import SearchForm, ProductForm
 
 
 def products_view(request):
-    products = Product.objects.all().filter(remainder__gte=1).order_by('category').order_by('name')
+    products = Product.objects.all().filter(remainder__gte=1).order_by('category', 'name')
     search_form = SearchForm(data=request.GET)
     if search_form.is_valid():
         query = search_form.cleaned_data.get('query')
