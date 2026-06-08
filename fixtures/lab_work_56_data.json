@@ -1,0 +1,114 @@
+[
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "name": "Electronics",
+    "description": "electronic devices"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 6,
+  "fields": {
+    "name": "Beverages",
+    "description": "non-alcoholic beverages"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 6,
+  "fields": {
+    "name": "Iphone X",
+    "description": "new in unopened package",
+    "category": 1,
+    "created_at": "2026-06-04T06:51:01.740Z",
+    "price": "40000.00",
+    "image": "https://mobi-s.ru/wp-content/uploads/2018/01/iphone-foto_0000s_0001s_0000_1856750x0.jpg.webp",
+    "remainder": 5
+  }
+},
+{
+  "model": "products.product",
+  "pk": 7,
+  "fields": {
+    "name": "Coca cola, canned, 0,3 l.",
+    "description": "In metal can Cola",
+    "category": 6,
+    "created_at": "2026-06-04T06:52:52.542Z",
+    "price": "200.00",
+    "image": "https://i0.wp.com/cannichstores.co.uk/wp-content/uploads/2020/05/Coca-Cola-Original-Taste-330ml.png?fit=1000%2C1000&ssl=1",
+    "remainder": 5
+  }
+},
+{
+  "model": "products.product",
+  "pk": 8,
+  "fields": {
+    "name": "Fanta, plastic, 0,5l.",
+    "description": "Refreshing fanta in plastic can",
+    "category": 6,
+    "created_at": "2026-06-04T06:54:27.699Z",
+    "price": "70.00",
+    "image": "https://www.trapeza.kg/images/nowaterbig/228875.jpg",
+    "remainder": 5
+  }
+},
+{
+  "model": "products.product",
+  "pk": 9,
+  "fields": {
+    "name": "Galaxy Tab S10 FE",
+    "description": "Galaxy Tab S10 FE (10.9\") + S-Pen 12+256Gb Wi-Fi",
+    "category": 1,
+    "created_at": "2026-06-08T08:26:51.745Z",
+    "price": "50000.00",
+    "image": "https://www.samsungstore.kg/cache/files/17746.png_w630_h480_resize.png?t=1766082734",
+    "remainder": 5
+  }
+},
+{
+  "model": "products.product",
+  "pk": 10,
+  "fields": {
+    "name": "Dr Pepper, 330 ml",
+    "description": "Imported from America",
+    "category": 6,
+    "created_at": "2026-06-08T08:29:09.893Z",
+    "price": "200.00",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Dr_Pepper_Dose_2024.jpg/500px-Dr_Pepper_Dose_2024.jpg",
+    "remainder": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 11,
+  "fields": {
+    "name": "Fuse-team, 500 ml, Mango-Ananas",
+    "description": "Sweet non-gas drink with mango and ananas flavour",
+    "category": 6,
+    "created_at": "2026-06-08T08:30:50.312Z",
+    "price": "70.00",
+    "image": "https://www.coca-cola.com/content/dam/onexp/kz/ru/home-images/brands/brand-fusetea/desktop/fusetea-mango-pineapple_d.jpg/width3840.jpg",
+    "remainder": 10
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$49cXVb0fkPRLDtZ2cvrFUy$T4TsZpEXwSkbO5BDJ7R7h6C1j1LjbMCttnIEiJ82DDU=",
+    "last_login": "2026-06-08T08:07:33.332Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-06-08T08:07:28.327Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
