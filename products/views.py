@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from products.models import Product, Category
-from products.forms import SearchForm
+from products.forms import SearchForm, ProductForm
+
 
 def products_view(request):
     products = Product.objects.all().filter(remainder__gte=1).order_by('category').order_by('name')
@@ -31,26 +32,23 @@ def category_add_view(request):
     return render(request,'category_add_view.html')
 
 def product_add_view(request):
-    categories = Category.objects.all()
-    if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        description = request.POST.get('description', '').strip()
-        category_id = request.POST.get('category', '').strip()
-        price = request.POST.get('price', '').strip()
-        image = request.POST.get('image', '').strip()
-        remainder = request.POST.get('remainder', '').strip()
-        if name and category_id:
-            category = get_object_or_404(Category, id=category_id)
-            new_product = Product.objects.create(
-                name=name,
-                description=description,
-                category=category,
-                price=price,
-                image=image,
-                remainder=remainder
+    if request.method == 'GET':
+        product_form = ProductForm()
+        return render(request, 'product_add_view.html', {'form': product_form})
+    elif request.method == 'POST':
+        form = ProductForm(data=request.POST)
+        if form.is_valid():
+            Product.objects.create(
+                name=form.cleaned_data['name'],
+                description=form.cleaned_data['description'],
+                category=form.cleaned_data['category'],
+                price=form.cleaned_data['price'],
+                image=form.cleaned_data['image'],
+                remainder=form.cleaned_data['remainder'],
             )
-            return redirect('product_view', id=new_product.id)
-    return render(request,'product_add_view.html', {'categories': categories})
+            return redirect('products_list')
+        else:
+            return render(request, 'product_add_view.html', context={'form': form})
 
 def product_edit_view(request, id):
     product = get_object_or_404(Product, id=id)
