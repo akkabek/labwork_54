@@ -29,6 +29,7 @@ def product_add_view(request):
         category_id = request.POST.get('category', '').strip()
         price = request.POST.get('price', '').strip()
         image = request.POST.get('image', '').strip()
+        remainder = request.POST.get('remainder', '').strip()
         if name and category_id:
             category = get_object_or_404(Category, id=category_id)
             new_product = Product.objects.create(
@@ -36,7 +37,8 @@ def product_add_view(request):
                 description=description,
                 category=category,
                 price=price,
-                image=image
+                image=image,
+                remainder=remainder
             )
             return redirect('product_view', id=new_product.id)
     return render(request,'product_add_view.html', {'categories': categories})
