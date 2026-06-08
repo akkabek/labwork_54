@@ -2,78 +2,13 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-5">
-
-        <h2 class="mb-4">
-            Edit Product
-        </h2>
-
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="mb-3">
-                <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    value="{{ product.name }}"
-                    required>
-            </div>
-
-            <div class="mb-3">
-                <input
-                    type="number"
-                    step="0.01"
-                    class="form-control"
-                    name="price"
-                    value="{{ product.price }}"
-                    required>
-            </div>
-
-            <div class="mb-3">
-                <input
-                    type="url"
-                    class="form-control"
-                    name="image"
-                    value="{{ product.image }}"
-                    required>
-            </div>
-
-            <div class="mb-3">
-                <select
-                    class="form-select"
-                    name="category">
-
-                    {% for category in categories %}
-                        <option
-                            value="{{ category.id }}"
-                            {% if category.id == product.category.id %}
-                                selected
-                            {% endif %}
-                        >
-                            {{ category.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <textarea
-                    class="form-control"
-                    name="description"
-                    rows="4">{{ product.description }}</textarea>
-            </div>
-
-            <button
-                type="submit"
-                class="btn btn-primary">
-                Edit Product
-            </button>
-
+<div class="card my-5">
+    <div class="card-header fs-4 text-center py-3">Edit product</div>
+    <div class="card-body">
+        <form method="POST" action="">
+            {% include 'partial/product_form.html' %}
+            <button type="submit" class="btn btn-primary">Edit</button>
         </form>
-
     </div>
 </div>
-
 {% endblock %}

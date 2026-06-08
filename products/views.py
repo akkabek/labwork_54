@@ -52,17 +52,23 @@ def product_add_view(request):
 
 def product_edit_view(request, id):
     product = get_object_or_404(Product, id=id)
-    categories = Category.objects.all()
-    if request.method == 'POST':
-        product.name = request.POST.get('name', '').strip()
-        product.description = request.POST.get('description', '').strip()
-        product.price = request.POST.get('price', '').strip()
-        product.image = request.POST.get('image', '').strip()
-        category_id = request.POST.get('category')
-        product.category = get_object_or_404(Category, id=category_id)
-        product.save()
-        return redirect('product_view', id=product.id)
-    return render(request,'product_edit_view.html',{'product': product,'categories': categories})
+    if request.method == 'GET':
+        form = ProductForm(instance=product)
+        return render(request, 'product_edit_view.html', {'form': form})
+    elif request.method == 'POST':
+        form = ProductForm(data=request.POST)
+        if form.is_valid():
+            product.name = form.cleaned_data['name']
+            product.description = form.cleaned_data['description']
+            product.category = form.cleaned_data['category']
+            product.price = form.cleaned_data['price']
+            product.image = form.cleaned_data['image']
+            product.remainder = form.cleaned_data['remainder']
+            product.save()
+            return redirect('products_list')
+        else:
+            return render(request, 'product_add_view.html', context={'form': form})
+
 
 def product_delete_view(request, id):
     product = get_object_or_404(Product, id=id)
