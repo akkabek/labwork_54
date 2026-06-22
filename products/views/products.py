@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
+from django.urls import reverse_lazy
 
 from products.models import Product, Category
 from products.forms import ProductForm
@@ -32,35 +33,11 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     pk_url_kwarg = 'id'
 
-def category_add_view(request):
-    if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        description = request.POST.get('description', '').strip()
-        if name:
-            Category.objects.create(
-                name=name,
-                description=description)
-        return redirect('product_list')
-    return render(request, 'categories/category_add_view.html')
-
-def product_add_view(request):
-    if request.method == 'GET':
-        product_form = ProductForm()
-        return render(request, 'products/product_add_view.html', {'form': product_form})
-    elif request.method == 'POST':
-        form = ProductForm(data=request.POST)
-        if form.is_valid():
-            Product.objects.create(
-                name=form.cleaned_data['name'],
-                description=form.cleaned_data['description'],
-                category=form.cleaned_data['category'],
-                price=form.cleaned_data['price'],
-                image=form.cleaned_data['image'],
-                remainder=form.cleaned_data['remainder'],
-            )
-            return redirect('product_list')
-        else:
-            return render(request, 'products/product_add_view.html', context={'form': form})
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'products/product_add_view.html'
+    success_url = reverse_lazy('product_list')
 
 def product_edit_view(request, id):
     product = get_object_or_404(Product, id=id)

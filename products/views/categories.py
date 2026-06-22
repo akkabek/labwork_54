@@ -7,6 +7,17 @@ def categories_view(request):
     categories = Category.objects.all()
     return render(request, 'categories/category_view.html', {'categories': categories})
 
+def category_add_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
+        description = request.POST.get('description', '').strip()
+        if name:
+            Category.objects.create(
+                name=name,
+                description=description)
+        return redirect('product_list')
+    return render(request, 'categories/category_add_view.html')
+
 def category_edit_view(request, id):
     category = get_object_or_404(Category, id=id)
     if request.method == 'POST':
