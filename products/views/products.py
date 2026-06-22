@@ -26,9 +26,11 @@ class ProductListView(ListView):
         context['categories'] = Category.objects.all()
         return context
 
-def product_view(request, id):
-    product = get_object_or_404(Product, id=id)
-    return render(request, 'products/product_view.html', {'product': product})
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/product_view.html'
+    context_object_name = 'product'
+    pk_url_kwarg = 'id'
 
 def category_add_view(request):
     if request.method == 'POST':
