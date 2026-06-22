@@ -34,3 +34,14 @@ class Product(models.Model):
         db_table = 'Товары'
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.product.name} x {self.quantity}'
+
+    class Meta:
+        verbose_name = 'Товар в корзине'
+        verbose_name_plural = 'Товары в корзине'
