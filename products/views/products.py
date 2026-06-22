@@ -39,31 +39,16 @@ class ProductCreateView(CreateView):
     template_name = 'products/product_add_view.html'
     success_url = reverse_lazy('product_list')
 
-def product_edit_view(request, id):
-    product = get_object_or_404(Product, id=id)
-    if request.method == 'GET':
-        form = ProductForm(instance=product)
-        return render(request, 'products/product_edit_view.html', {'form': form})
-    elif request.method == 'POST':
-        form = ProductForm(data=request.POST)
-        if form.is_valid():
-            product.name = form.cleaned_data['name']
-            product.description = form.cleaned_data['description']
-            product.category = form.cleaned_data['category']
-            product.price = form.cleaned_data['price']
-            product.image = form.cleaned_data['image']
-            product.remainder = form.cleaned_data['remainder']
-            product.save()
-            return redirect('product_list')
-        else:
-            return render(request, 'products/product_add_view.html', context={'form': form})
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'products/product_edit_view.html'
+    pk_url_kwarg = 'id'
+    success_url = reverse_lazy('product_list')
 
-
-def product_delete_view(request, id):
-    product = get_object_or_404(Product, id=id)
-    if request.method == 'GET':
-        return render(request, 'products/product_delete_view.html', {'product': product})
-    if request.method == 'POST':
-        product.delete()
-        return redirect('products')
-    return redirect('product_view', id=id)
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'products/product_delete_view.html'
+    pk_url_kwarg = 'id'
+    success_url = reverse_lazy('product_list')
+    context_object_name = 'product'
