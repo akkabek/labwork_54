@@ -22,7 +22,7 @@
             <td>{{ item.quantity }}</td>
             <td>{{ item.total }} KGS</td>
             <td>
-                <a href="#" class="btn btn-sm btn-outline-danger">
+                <a href="{% url 'cart_remove' item.pk %}" class="btn btn-sm btn-outline-danger">
                     <i class="fa-regular fa-trash-can"></i> Удалить
                 </a>
             </td>
