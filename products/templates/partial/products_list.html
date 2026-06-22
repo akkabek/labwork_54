@@ -14,6 +14,9 @@
                     </a>
                     <p><strong>Price: {{ product.price }} KGS</strong></p>
                     <a href="{% url 'product_view' product.id %}">see more</a>
+                    <a href="{% url 'cart_add' product.pk %}" class="btn btn-sm btn-success mt-2">
+                        <i class="fa-solid fa-cart-plus"></i> В корзину
+                    </a>
                 </div>
             </div>
             <div class="col-2 mt-3">
