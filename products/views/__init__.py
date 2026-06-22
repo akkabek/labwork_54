@@ -13,3 +13,5 @@ from products.views.categories import category_products_view
 from products.views.cart import CartAddView
 from products.views.cart import CartListView
 from products.views.cart import CartRemoveView
+
+from products.views.orders import OrderCreateView

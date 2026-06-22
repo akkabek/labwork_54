@@ -3,6 +3,7 @@ from django.views import View
 from django.views.generic import ListView
 
 from products.models import Product, CartItem
+from products.forms import OrderForm
 
 class CartListView(ListView):
     template_name = 'cart/cart.html'
@@ -15,6 +16,7 @@ class CartListView(ListView):
         context = super().get_context_data(**kwargs)
         items = context['cart_items']
         context['total'] = sum(item.total() for item in items)
+        context['order_form'] = OrderForm()
         return context
 
 class CartAddView(View):
