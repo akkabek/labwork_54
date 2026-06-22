@@ -48,3 +48,26 @@ class CartItem(models.Model):
     class Meta:
         verbose_name = 'Товар в корзине'
         verbose_name_plural = 'Товары в корзине'
+
+class Order(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Имя')
+    phone = models.CharField(max_length=30, verbose_name='Телефон')
+    address = models.CharField(max_length=255, verbose_name='Адрес')
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name='Дата создания')
+    products = models.ManyToManyField(Product,through='OrderItem')
+
+    def __str__(self):
+        return f'Заказ №{self.pk}'
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.product} x {self.quantity}'
