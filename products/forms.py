@@ -1,6 +1,6 @@
 from django import forms
 
-from products.views.products import Product
+from products.models import Product, Order
 
 
 class ProductForm(forms.ModelForm):
@@ -23,5 +23,17 @@ class ProductForm(forms.ModelForm):
             'remainder':forms.NumberInput(attrs={'class': 'form-control', 'placeholder':'Остаток'}),
         }
 
+
 class SearchForm(forms.Form):
     query = forms.CharField(required=False, label='Поиск по названию')
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['name', 'address', 'phone']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+        }
