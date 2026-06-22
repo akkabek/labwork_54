@@ -5,7 +5,7 @@ from products.forms import SearchForm
 
 def categories_view(request):
     categories = Category.objects.all()
-    return render(request, 'categories/categories_view.html', {'categories': categories})
+    return render(request, 'categories/category_view.html', {'categories': categories})
 
 def category_edit_view(request, id):
     category = get_object_or_404(Category, id=id)

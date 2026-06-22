@@ -1,4 +1,4 @@
-from products.views.products import products_view
+from products.views.products import ProductListView
 from products.views.products import product_view
 from products.views.products import category_add_view
 from products.views.products import product_add_view

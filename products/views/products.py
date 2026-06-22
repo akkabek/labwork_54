@@ -1,21 +1,29 @@
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
 
 from products.models import Product, Category
-from products.forms import SearchForm, ProductForm
+from products.forms import ProductForm
 
 
-def products_view(request):
-    products = Product.objects.all().filter(remainder__gte=1).order_by('category', 'name')
-    categories = Category.objects.all()
-    search_form = SearchForm(data=request.GET)
-    if search_form.is_valid():
-        query = search_form.cleaned_data.get('query')
+class ProductListView(ListView):
+    template_name = 'products/product_list.html'
+    model = Product
+    paginate_by = 5
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get('q', '').strip()
         if query:
-            products = products.filter(name__icontains=query)
+            qs = qs.filter(Q(name__icontains=query) | Q(description__icontains=query))
+        return qs
 
-    context = {'products': products, 'search_form': search_form, 'categories': categories}
-
-    return render(request, 'products/products_view.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q', '')
+        return context
 
 def product_view(request, id):
     product = get_object_or_404(Product, id=id)
@@ -29,7 +37,7 @@ def category_add_view(request):
             Category.objects.create(
                 name=name,
                 description=description)
-        return redirect('products_list')
+        return redirect('product_list')
     return render(request, 'categories/category_add_view.html')
 
 def product_add_view(request):
@@ -47,7 +55,7 @@ def product_add_view(request):
                 image=form.cleaned_data['image'],
                 remainder=form.cleaned_data['remainder'],
             )
-            return redirect('products_list')
+            return redirect('product_list')
         else:
             return render(request, 'products/product_add_view.html', context={'form': form})
 
@@ -66,7 +74,7 @@ def product_edit_view(request, id):
             product.image = form.cleaned_data['image']
             product.remainder = form.cleaned_data['remainder']
             product.save()
-            return redirect('products_list')
+            return redirect('product_list')
         else:
             return render(request, 'products/product_add_view.html', context={'form': form})
 
