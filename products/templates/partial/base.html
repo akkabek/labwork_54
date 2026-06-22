@@ -13,12 +13,11 @@
     <nav class="navbar navbar-light bg-light px-4">
         <a href="{% url 'products' %}" class="navbar-brand fw-bold me-auto">My market</a>
 
-        <form method="GET" action="" class="d-flex mx-auto">
-
-            <input type="text" name="query" class="form-control w-auto"
+        <form method="GET" action="{% url 'product_list' %}" class="d-flex mx-auto">
+            <input type="text" name="q" class="form-control w-auto"
                    placeholder="Поиск по товару"
-                   value="{{ request.GET.query }}">
-            <button type="submit" class="btn btn-outline-primary">Найти</button>
+                   value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-outline-primary ms-1">Найти</button>
         </form>
         <span class="mx-6">|</span>
 

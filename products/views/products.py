@@ -14,7 +14,7 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        qs = Product.objects.filter(remainder__gte=1).order_by('category__name', 'name')
         query = self.request.GET.get('q', '').strip()
         if query:
             qs = qs.filter(Q(name__icontains=query) | Q(description__icontains=query))
@@ -23,6 +23,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['q'] = self.request.GET.get('q', '')
+        context['categories'] = Category.objects.all()
         return context
 
 def product_view(request, id):
