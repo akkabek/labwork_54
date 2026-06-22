@@ -3,8 +3,12 @@ from products.views.products import ProductDetailView
 from products.views.products import ProductCreateView
 from products.views.products import ProductUpdateView
 from products.views.products import ProductDeleteView
+
 from products.views.categories import categories_view
 from products.views.categories import category_add_view
 from products.views.categories import category_edit_view
 from products.views.categories import category_delete_view
 from products.views.categories import category_products_view
+
+from products.views.cart import CartAddView
+from products.views.cart import CartListView
