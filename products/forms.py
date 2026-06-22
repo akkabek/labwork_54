@@ -14,7 +14,7 @@ class ProductForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={'class': "form-control", 'placeholder': 'Cтоимость товара'})
     )
     description = forms.CharField(
-        max_length=2000, required=True, label='Описание',
+        max_length=500, required=True, label='Описание',
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     category = forms.ModelChoiceField(
