@@ -1,7 +1,6 @@
 from django import forms
-from django.forms import widgets
 
-from products.models import Category, Product
+from products.views.products import Category, Product
 
 
 class ProductForm(forms.ModelForm):

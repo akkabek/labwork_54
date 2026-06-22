@@ -15,11 +15,11 @@ def products_view(request):
 
     context = {'products': products, 'search_form': search_form, 'categories': categories}
 
-    return render(request, 'products_view.html', context)
+    return render(request, 'products/products_view.html', context)
 
 def product_view(request, id):
     product = get_object_or_404(Product, id=id)
-    return render(request, 'product_view.html', {'product': product})
+    return render(request, 'products/product_view.html', {'product': product})
 
 def category_add_view(request):
     if request.method == 'POST':
@@ -30,12 +30,12 @@ def category_add_view(request):
                 name=name,
                 description=description)
         return redirect('products_list')
-    return render(request,'category_add_view.html')
+    return render(request, 'categories/category_add_view.html')
 
 def product_add_view(request):
     if request.method == 'GET':
         product_form = ProductForm()
-        return render(request, 'product_add_view.html', {'form': product_form})
+        return render(request, 'products/product_add_view.html', {'form': product_form})
     elif request.method == 'POST':
         form = ProductForm(data=request.POST)
         if form.is_valid():
@@ -49,13 +49,13 @@ def product_add_view(request):
             )
             return redirect('products_list')
         else:
-            return render(request, 'product_add_view.html', context={'form': form})
+            return render(request, 'products/product_add_view.html', context={'form': form})
 
 def product_edit_view(request, id):
     product = get_object_or_404(Product, id=id)
     if request.method == 'GET':
         form = ProductForm(instance=product)
-        return render(request, 'product_edit_view.html', {'form': form})
+        return render(request, 'products/product_edit_view.html', {'form': form})
     elif request.method == 'POST':
         form = ProductForm(data=request.POST)
         if form.is_valid():
@@ -68,51 +68,14 @@ def product_edit_view(request, id):
             product.save()
             return redirect('products_list')
         else:
-            return render(request, 'product_add_view.html', context={'form': form})
+            return render(request, 'products/product_add_view.html', context={'form': form})
 
 
 def product_delete_view(request, id):
     product = get_object_or_404(Product, id=id)
     if request.method == 'GET':
-        return render(request, 'product_delete_view.html', {'product': product})
+        return render(request, 'products/product_delete_view.html', {'product': product})
     if request.method == 'POST':
         product.delete()
         return redirect('products')
     return redirect('product_view', id=id)
-
-def categories_view(request):
-    categories = Category.objects.all()
-    return render(request, 'categories_view.html', {'categories': categories})
-
-def category_edit_view(request, id):
-    category = get_object_or_404(Category, id=id)
-    if request.method == 'POST':
-        category.name = request.POST.get('name', '').strip()
-        category.description = request.POST.get('description', '').strip()
-        category.save()
-        return redirect('categories_view')
-    return render(request, 'category_edit_view.html', {'category': category})
-
-def category_delete_view(request, id):
-    category = get_object_or_404(Category, id=id)
-
-    if request.method == 'POST':
-        category.delete()
-    return redirect('categories_view')
-
-def category_products_view(request, slug):
-    category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(category=category, remainder__gte=1).order_by('name')
-
-    search_form = SearchForm(data=request.GET)
-    if search_form.is_valid():
-        query = search_form.cleaned_data.get('query')
-        if query:
-            products = products.filter(name__icontains=query)
-
-    context = {
-        'products': products,
-        'search_form': search_form,
-        'category': category,
-    }
-    return render(request, 'category_products_view.html', context)

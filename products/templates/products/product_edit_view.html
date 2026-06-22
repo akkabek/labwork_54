@@ -1,13 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'partial/base.html' %}
 
 {% block content %}
 
 <div class="card my-5">
-    <div class="card-header fs-4 text-center py-3">Add new product</div>
+    <div class="card-header fs-4 text-center py-3">Edit product</div>
     <div class="card-body">
         <form method="POST" action="">
             {% include 'partial/product_form.html' %}
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">Edit</button>
         </form>
     </div>
 </div>
